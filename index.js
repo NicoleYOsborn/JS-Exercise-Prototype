@@ -95,7 +95,7 @@ Car.prototype.drive = function(distance) {
   this.odometer = this.odometer + distance;
   this.tank = this.tank - distance / this.milesPerGallon;
   if (this.tank <= 0) {
-    this.odometer = this.odometer + Math.abs(this.tank) * this.milesPerGallon;
+    this.odometer = this.odometer + this.tank * this.milesPerGallon;
     this.tank = 0;
     return `I ran out of fuel at ${this.odometer} miles!`;
   }
@@ -108,18 +108,25 @@ Car.prototype.drive = function(distance) {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby(favoriteToy) {
-  Person.call(this, favoriteToy);
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 } //creates constructor subclassing Person
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+const babyOne = new Baby('Zelda', 9, 'Lego');
+console.log (babyOne);
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Using "this" outside of a function (in the global scope) points to the window.
+  2. When it is used inside of an object it points to that object (whatever is to the left of the dot)
+  3. When a constructor function is being used, this now refers to the new object being created.
+  4. Using .call, .apply, or .bind will explicitly state what "this" refers to.
 */
 
 ///////// END OF CHALLENGE /////////
